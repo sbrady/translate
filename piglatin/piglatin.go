@@ -1,44 +1,47 @@
 package piglatin
 
 func Translate(english string) (string) {
-	return translateToPig(english)
+	englishRunes := []rune(english)
+	return translateToPig(englishRunes)
 }
 
-func translateToPig(english string) (string) {
+func translateToPig(english []rune) (string) {
 	return addCorrectLatinSoundBasedOnLastLetter(moveLettersToEnd(removeDuplicateLettersFromBeginningAfterFirstLetter(english)))
 }
 
-func addCorrectLatinSoundBasedOnLastLetter(english string) (string){
-	if isVowel(rune(english[len(english)-1])) {
-		return english + "way"
+func addCorrectLatinSoundBasedOnLastLetter(english []rune) (string){
+	if isVowel(english[len(english) - 1]) {
+		return string(english) + "way"
 	}
-	return english + "ay"
+	return string(english) + "ay"
 }
 
-func moveLettersToEnd(english string) (string) {
-	if isVowel(rune(english[0])){
-		return string(english[1:len(english)]) + string(english[0])
+func moveLettersToEnd(english []rune) ([]rune) {
+	if isVowel(english[0]) { 
+		f := english[1:len(english)]
+		f = append(f, english[0])
+		return f
 	}
 
 	return moveConsonantClusterToEnd(english, extractBeginningConsonantCluster(english))
 }
 
-func moveConsonantClusterToEnd(english string, consonantsCluster string)(string){
-	return englishWithOutConsonantCluster(english, consonantsCluster) + consonantsCluster
+func moveConsonantClusterToEnd(english []rune, consonantsCluster []rune)([]rune){
+	return append(englishWithOutConsonantCluster(english, consonantsCluster), consonantsCluster...)
 }
 
-func removeDuplicateLettersFromBeginningAfterFirstLetter(english string)(string){
+func removeDuplicateLettersFromBeginningAfterFirstLetter(english []rune)([]rune){
 	if (english[1] == english[2]) {
-		return english[0:1] + english[2:len(english)]
+		return append(english[0:1], english[2:len(english)]...)
 	}
 	return english
 }
 
-func englishWithOutConsonantCluster(english string, consonants string) (string) {
+func englishWithOutConsonantCluster(english []rune, consonants []rune) ([]rune) {
 	return english[len(consonants):len(english)]
 }
 
-func extractBeginningConsonantCluster(word string) (string) {
+func extractBeginningConsonantCluster(word []rune) ([]rune) {
 	consonants := []rune{}
 	for _, letter := range word {
 		if isConsonant(letter) {
@@ -47,7 +50,7 @@ func extractBeginningConsonantCluster(word string) (string) {
 			break;
 		}
 	}
-	return string(consonants)
+	return consonants
 }
 
 func isVowel(letter rune) (bool) {
