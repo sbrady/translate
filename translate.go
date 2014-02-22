@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"github.com/pivotal/translate/translator"
-	"github.com/pivotal/translate/piglatin"
-	"github.com/pivotal/translate/russian"
+	"github.com/sbrady/translate/translator"
+	"github.com/sbrady/translate/piglatin"
+	"github.com/sbrady/translate/russian"
 )
 
 func newTranslator(translatorType string) translator.Translator {
