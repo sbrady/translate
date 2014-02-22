@@ -1,6 +1,9 @@
 package piglatin
 
-func Translate(english string) (string) {
+type Translator struct {
+}
+
+func (p Translator) Translate(english string) (string) {
 	englishRunes := []rune(english)
 	return translateToPig(englishRunes)
 }
